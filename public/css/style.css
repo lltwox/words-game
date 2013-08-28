@@ -1,0 +1,54 @@
+body {
+    font-size: 20px;
+}
+
+.logo {
+    font-size: 40px;
+    font-family: Consolas;
+    text-transform: uppercase;
+    font-weight: bold;
+
+    position: absolute;
+    width: 260px;
+    left: 0;
+    right: 0;
+    top: 20px;
+}
+.wrapper {
+    margin-top: 80px;
+    padding: 20px;
+}
+
+#game.waiting .status-waiting {
+    display: block;
+}
+#game.starting .status-starting {
+    display: block;
+}
+
+.status {
+    display: none;
+}
+
+.status-waiting {
+    margin-top: 10%;
+    width: 240px;
+}
+
+.status-starting {
+    margin-top: 10%;
+    width: 240px;
+}
+.status-starting .starting-time {
+    font-size: 1.6em;
+    position: relative;
+    left: 10px;
+    top: 5px;
+}
+
+.centered {
+    margin-left: auto;
+    margin-right: auto;
+}
+
+
