@@ -19,24 +19,49 @@ body {
     padding: 20px;
 }
 
+#game.name .status-name {
+    display: block;
+}
 #game.waiting .status-waiting {
     display: block;
 }
 #game.starting .status-starting {
     display: block;
 }
+#game.in-progress .status-in-progress {
+    display: block;
+}
+#game.lost-connection .status-lost-connection {
+    display: block;
+}
 
-.status {
+.user-status-change {
+    position: absolute;
+    height: 50px;
+    top: 20px;
+    right: 20px;
+    font-size: 0.8em;
     display: none;
 }
 
-.status-waiting {
+.status {
     margin-top: 10%;
+    display: none;
+}
+
+.status-name {
+    width: 300px;
+    text-align: center;
+}
+.status-name button[type="submit"] {
+    margin-top: 20px;
+}
+
+.status-waiting {
     width: 240px;
 }
 
 .status-starting {
-    margin-top: 10%;
     width: 240px;
 }
 .status-starting .starting-time {
@@ -46,9 +71,56 @@ body {
     top: 5px;
 }
 
+.status-in-progress {
+    margin-top: 4%;
+    width: 800px;
+    text-align: center;
+}
+.status-in-progress .info-placeholder {
+    padding-top: 6%;
+}
+.status-in-progress .game-data {
+    text-align: left;
+}
+.status-in-progress .game-canvas {
+    margin-top: 8px;
+    width: 630px;
+    float: left;
+    text-align: center;
+}
+.status-in-progress .game-word ul {
+    margin: 0;
+    padding: 0;
+}
+.status-in-progress .game-word li {
+    display: inline-block;
+    text-transform: uppercase;
+    padding: 2px 4px;
+    margin: 0 2px;
+    border: 1px solid #ccc;
+}
+.status-in-progress .game-input .input-group {
+    margin-top: 50px;
+    width: 300px;
+}
+
+.status-in-progress .game-score {
+    font-size: 0.8em;
+    width: 150px;
+    float: right;
+}
+
+.status-lost-connection {
+    width: 190px;
+}
+
 .centered {
     margin-left: auto;
     margin-right: auto;
+}
+
+.hidden {
+    display: none;
 }
 
 

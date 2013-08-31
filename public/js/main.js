@@ -1,20 +1,29 @@
 $(function() {
-    var socket = io.connect();
-    socket.on('status', function(status) {
-        $('#game').attr('class', '').addClass(status);
+    var game = null;
+
+    $('.status-name form').on('submit', function() {
+        var input = $('#player-name'),
+            name = input.val();
+
+        if (!name) {
+            input.parent().addClass('has-error');
+            return false;
+        }
+        (game = new Game()).start(name);
+
+        return false;
     });
 
-    socket.on('starting', function(time) {
-        $('#game').attr('class', '').addClass('starting');
-        $('.status-starting .starting-time').text(time);
+    $('.game-input form').on('submit', function() {
+        var input = $(this).find('input'),
+            word = input.val();
 
-        var timer = null;
-        timer = setInterval(function() {
-            time = time - 1;
-            $('.status-starting .starting-time').text(time);
-            if (time === 0) {
-                clearTimeout(timer);
-            }
-        }, 1000);
+        input.val('');
+
+        if (game && word) {
+            game.sendWord(word);
+        }
+
+        return false;
     });
 });

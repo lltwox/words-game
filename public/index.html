@@ -11,22 +11,81 @@
     </head>
     <body>
         <div class="logo centered">Words v0.1</div>
+        <div class="user-status-change alert">
+            <strong>lex</strong><span>joined!</span>
+        </div>
         <div class="wrapper">
-            <div id="game">
+            <div id="game" class="name">
+                <div class="status status-name centered">
+                    <form role="form">
+                        <div class="input-group">
+                            <span class="input-group-addon">Name:</span>
+                            <input type="text" class="form-control" id="player-name" value="lex">
+                        </div>
+                        <button type="submit" class="btn btn-lg btn-primary centered">Play!</button>
+                    </form>
+                </div>
+
                 <div class="status status-waiting centered">
                     Waiting for more players...
                 </div>
 
                 <div class="status status-starting centered">
-                    Game is starting in <span class="starting-time">5</span>
+                    Game is starting in <span class="starting-time"></span>
                 </div>
 
+                <div class="status status-in-progress centered">
+                    <div class="info-placeholder">
+                        Game is now in progress!
+                    </div>
+                    <div class="game-data hidden">
+                        <div class="game-canvas">
+                            <div class="game-word">
+                                <ul>
+                                </ul>
+                            </div>
+                            <div class="game-input">
+                                <form role="form">
+                                    <div class="input-group centered">
+                                        <input class="form-control" type="text"
+                                            id="word-input" placeholder="Your word">
+                                        <span class="input-group-btn">
+                                            <button class="btn btn-success"
+                                                type="submit">Add!
+                                            </button>
+                                        </span>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                        <div class="game-score">
+                            <table class="table table-condensed">
+                                <thead>
+                                    <tr>
+                                        <th>Name</th>
+                                        <th>Score</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="status status-lost-connection centered">
+                    <div class="alert alert-danger">
+                        Connection lost...
+                    </div>
+                </div>
             </div>
         </div>
 
         <script src="/socket.io/socket.io.js"></script>
-        <script src="/js/jquery-2.0.3.min.js"></script>
-        <script src="/js/bootstrap.js"></script>
+        <script src="/js/lib/jquery-2.0.3.min.js"></script>
+        <script src="/js/lib/bootstrap.js"></script>
         <script src="/js/main.js"></script>
+        <script src="/js/flash.js"></script>
+        <script src="/js/game.js"></script>
     </body>
 </html>

@@ -1,8 +1,11 @@
 {
-    "name": "words-game",
-    "version": "0.0.1",
-    "dependencies": {
-        "express": "*",
-        "socket.io": "*"
-    }
+  "name": "words-game",
+  "description": "Best words game, you've played!",
+  "version": "0.0.1",
+  "dependencies": {
+    "express": "*",
+    "socket.io": "*",
+    "mongodb": "*",
+    "lazy": "~1.0.11"
+  }
 }
