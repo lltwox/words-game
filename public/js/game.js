@@ -5,10 +5,10 @@ function Game() {
 
     this.flash = new Flash();
     this.startGameTimer = null;
+    this.endGameTimer = null;
 
     this.statusHandlers = {};
     this.statusHandlers['waiting'] = $.proxy(this.handleWaitingStatus, this);
-    this.statusHandlers['starting'] = $.proxy(this.handleStartingStatus, this);
 }
 
 Game.prototype.start = function(name) {
@@ -25,10 +25,13 @@ Game.prototype.start = function(name) {
     this.socket.on('room.status', $.proxy(this.onStatus, this));
     this.socket.on('room.joined', $.proxy(this.onJoined, this));
     this.socket.on('room.left', $.proxy(this.onLeft, this));
-    this.socket.on('room.get-start-time', $.proxy(this.onGetStartTime, this));
+    this.socket.on('room.start-time', $.proxy(this.onStartTime, this));
 
     this.socket.on('game.data', $.proxy(this.onGameData, this));
     this.socket.on('game.score', $.proxy(this.onGameScore, this));
+    this.socket.on('game.left', $.proxy(this.onGameLeft, this));
+    this.socket.on('game.end-time', $.proxy(this.onGameEndTime, this));
+    this.socket.on('game.winner', $.proxy(this.onGameWinner, this));
 };
 
 Game.prototype.onConnect = function() {
@@ -61,7 +64,7 @@ Game.prototype.onLeft = function(name) {
     this.flash.left(name);
 };
 
-Game.prototype.onGetStartTime = function(time) {
+Game.prototype.onStartTime = function(time) {
     var timePlaceholder = $('.status-starting .starting-time');
     var seconds = Math.ceil(time / 1000);
     timePlaceholder.text(seconds);
@@ -126,19 +129,47 @@ Game.prototype.onGameScore = function(data) {
     }
 };
 
-Game.prototype.handleWaitingStatus = function() {
-    if (this.status === 'starting') {
-        clearInterval(this.startGameTimer);
-    } else if (this.status === 'in-progress') {
-
-    }
+Game.prototype.onGameLeft = function(playerId) {
+    $('tr[data-id="' + playerId + '"]').remove();
 };
 
-Game.prototype.handleStartingStatus = function() {
-    if (this.status == 'waiting' || !this.status) {
-        this.socket.emit('room.get-start-time');
-    } else if (this.status == 'in-progress') {
-        // game finished, new game is starting
+Game.prototype.onGameEndTime = function(time) {
+    var timePlaceholder = $('.game-time span');
+    var seconds = Math.ceil(time / 1000);
+    timePlaceholder.text(seconds);
+
+    var updateTimer = $.proxy(function() {
+        seconds = seconds - 1;
+        timePlaceholder.text(seconds);
+        if (seconds === 0) {
+            clearInterval(this.endGameTimer);
+        }
+    }, this);
+
+    clearTimeout(this.endGameTimer);
+    clearInterval(this.endGameTimer);
+    this.endGameTimer = setTimeout($.proxy(function() {
+        seconds = seconds - 1;
+        timePlaceholder.text(seconds);
+        if (seconds === 0) {
+            clearTimeout(this.endGameTimer);
+            return;
+        }
+        this.endGameTimer = setInterval(updateTimer, 1000);
+    }, this), time % ((seconds - 1) * 1000));
+};
+
+Game.prototype.onGameWinner = function(winner) {
+    this.flash.winner(winner.name, winner.score);
+};
+
+Game.prototype.handleWaitingStatus = function() {
+    if (this.status === 'starting') {
+        clearTimeout(this.startGameTimer);
+        clearInterval(this.startGameTimer);
+    } else if (this.status === 'in-progress') {
+        clearTimeout(this.endGameTimer);
+        clearInterval(this.endGameTimer);
     }
 };
 

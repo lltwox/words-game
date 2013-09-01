@@ -10,14 +10,9 @@ function Player(socket, words) {
 
     this.socket.on('disconnect', this.onDisconnect.bind(this));
     this.socket.on('room.name', this.onRoomName.bind(this));
-    this.socket.on('room.get-start-time', this.onRoomGetStartTime.bind(this));
 
     this.socket.on('game.word', this.onGameWord.bind(this));
 }
-
-Player.prototype.emit = function() {
-    this.socket.emit.apply(this.socket, arguments);
-};
 
 Player.prototype.onDisconnect = function() {
     this.words.removePlayer(this);

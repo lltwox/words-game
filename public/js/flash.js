@@ -6,7 +6,7 @@ function Flash() {
     this.timer = null;
 }
 
-Flash.prototype.TIMEOUT = 3 * 1000;
+Flash.prototype.TIMEOUT = 7 * 1000;
 
 Flash.prototype.joined = function(name) {
     this.success(name, ' has joined');
@@ -14,6 +14,10 @@ Flash.prototype.joined = function(name) {
 
 Flash.prototype.left = function(name) {
     this.error(name, ' has left');
+};
+
+Flash.prototype.winner = function(name, score) {
+    this.success(name, ' has won with score of ' + score);
 };
 
 Flash.prototype.success = function(strong, span) {
