@@ -10,5 +10,5 @@ Clone, cd into dir, run node app.js. Connect to localhost:3000 and play! Ask you
 
 Try
 ===
-You can try how it works at words.lltwox.me
+You can try how it works at http://words.lltwox.me
 
